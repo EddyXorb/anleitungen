@@ -15,3 +15,15 @@
     occ config:app:set preview jpeg_quality --value="60"
     ```
 5. mit `occ preview:generate-all` die previews neu generieren.
+
+# Datenbankprobleme mit MariaDB
+Wenn nextcloud nicht mehr geht kann dies an mariadb 10.6 liegen, das eine globale Variable 
+defaultmässig anders setzt. Um das zu beheben mit 
+`sudo docker exec -it mariadb1 bin/bash`
+in den container gehen, dann
+`mysql -p -u root`
+und dann das mysql passwort eingeben.
+Daraufhin
+`SET GLOBAL innodb_read_only_compressed=OFF;`
+schreiben, enter und beenden. Nun sollte es wieder gehen.
+Solange dieser Bug besteht sollte Watchtower ausbleiben. 
